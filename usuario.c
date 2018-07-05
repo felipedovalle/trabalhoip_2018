@@ -21,39 +21,39 @@ void menu_usuario(INFO_USUARIO *usuario, int *total_u, int *logado)
 	printf("0 - Voltar para o menu principal\n");
 	scanf("%d", &menu);
 
-	switch(menu)
+	switch (menu)
 	{
-		case 1:
-			clear();
-			usuario = read(&total);
-			incluir_usuario(inclui, usuario, n_usuario, total);
-			usuario = read(&total);
-			(*total_u)++;
-			break;
+	case 1:
+		clear();
+		usuario = read(&total);
+		incluir_usuario(inclui, usuario, n_usuario, total);
+		usuario = read(&total);
+		(*total_u)++;
+		break;
 
-		case 2:
-			clear();
-			usuario = read(&total);
-			flag_deleta = deleta_usuario(usuario, &total);
-			usuario = read(&total);
-			break;
+	case 2:
+		clear();
+		usuario = read(&total);
+		flag_deleta = deleta_usuario(usuario, &total);
+		usuario = read(&total);
+		break;
 
-		case 3:
-			clear();
-			usuario = read(&total);
-			sort(usuario, &total);
-			write(usuario, &total, flag_deleta);
-			listar_usuario(usuario, &total);
-			break;
+	case 3:
+		clear();
+		usuario = read(&total);
+		sort(usuario, &total);
+		write(usuario, &total, flag_deleta);
+		listar_usuario(usuario, &total);
+		break;
 
-		case 4:
-			usuario = read(&total);
-			alterar_senha(usuario, &usuario_logado);
-			break;
+	case 4:
+		usuario = read(&total);
+		alterar_senha(usuario, &usuario_logado);
+		break;
 
-		case 0:
-			clear();
-			break;
+	case 0:
+		clear();
+		break;
 	}
 	write(usuario, &total, flag_deleta);
 }
@@ -64,61 +64,61 @@ int checa_vazio()
 	arq = fopen("usuarios.txt", "r");
 
 	int size;
-	if (arq != NULL) 
+	if (arq != NULL)
 	{
-	    fseek (arq, 0, SEEK_END);
-	    size = ftell(arq);
-    }
-    return size;
+		fseek(arq, 0, SEEK_END);
+		size = ftell(arq);
+	}
+	return size;
 
-    fclose(arq);
+	fclose(arq);
 }
 
 void clear()
 {
-    #if defined(__linux__) || defined(__unix__) || defined(__APPLE__)
-        system("clear");
-    #endif
+#if defined(__linux__) || defined(__unix__) || defined(__APPLE__)
+	system("clear");
+#endif
 
-    #if defined(_WIN32) || defined(_WIN64)
-        system("cls");
-    #endif
+#if defined(_WIN32) || defined(_WIN64)
+	system("cls");
+#endif
 }
 
 void criptografa_senha(char *senha)
-{	
+{
 	int n_testes, i = 0, j = 0;
 	char temp;
 
 	j = 0;
-	while(j < strlen(senha))
+	while (j < strlen(senha))
 	{
-		if(isalpha(senha[j]) != 0 || isupper(senha[j]) != 0 || isdigit(senha[j]) != 0)
+		if (isalpha(senha[j]) != 0 || isupper(senha[j]) != 0 || isdigit(senha[j]) != 0)
 		{
 			senha[j] += 3;
 		}
 		j++;
 	}
-	
-	for(j = 0; j < strlen(senha); j += 2)
+
+	for (j = 0; j < strlen(senha); j += 2)
 	{
-		if(j == (strlen(senha) - 1))
+		if (j == (strlen(senha) - 1))
 		{
 			break;
-		}	
-	    temp = senha[j];
-	    senha[j] = senha[j + 1];
-	    senha[j + 1] = temp;
-    }
+		}
+		temp = senha[j];
+		senha[j] = senha[j + 1];
+		senha[j + 1] = temp;
+	}
 
-    j = 0;
-	while(j < strlen(senha))
+	j = 0;
+	while (j < strlen(senha))
 	{
-		if(isspace(senha[j]) != 0)
+		if (isspace(senha[j]) != 0)
 		{
 			senha[j] = '+';
 		}
-		else if(senha[j] == '+')
+		else if (senha[j] == '+')
 		{
 			senha[j] = ' ';
 		}
@@ -134,8 +134,8 @@ void incluir_usuario(INFO_USUARIO *inclui, INFO_USUARIO *usuario, int n_usuario,
 	char senha[STR_MAX], nome[STR_MAX], login[STR_MAX];
 	char compara_a[STR_MAX], compara_b[STR_MAX];
 	int tam = 0, u_total, i, procura_igual, contaCampos = 0;
-	
-	if(n_usuario == 0)
+
+	if (n_usuario == 0)
 	{
 		inclui = malloc(sizeof(INFO_USUARIO) * (n_usuario + 1));
 	}
@@ -148,12 +148,13 @@ void incluir_usuario(INFO_USUARIO *inclui, INFO_USUARIO *usuario, int n_usuario,
 	scanf(" %50[^\n]", inclui[n_usuario].login_u);
 	getchar();
 
-	igual: strcpy(compara_a, inclui[n_usuario].login_u);
+igual:
+	strcpy(compara_a, inclui[n_usuario].login_u);
 	i = 0;
 	strcpy(compara_b, usuario[i].login_u);
-	while(i < total)
+	while (i < total)
 	{
-		if(strcmp(compara_a, compara_b) == 0)
+		if (strcmp(compara_a, compara_b) == 0)
 		{
 			clear();
 			printf("Já existe um usuário com o login inserido!\n");
@@ -166,22 +167,22 @@ void incluir_usuario(INFO_USUARIO *inclui, INFO_USUARIO *usuario, int n_usuario,
 		strcpy(compara_b, usuario[i].login_u);
 	}
 
-	senhaMin: printf("Insira a senha a ser usada (min. 3 digitos): ");
+senhaMin:
+	printf("Insira a senha a ser usada (min. 3 digitos): ");
 	scanf("%50[^\n]", senha);
 	getchar();
 
 	tam = strlen(senha);
 
-	if(tam < 3)
+	if (tam < 3)
 	{
 		printf("O tamanho mínimo para a senha é de 3 dígitos. Tente novamente.\n");
 		goto senhaMin;
 	}
-	
+
 	criptografa_senha(senha);
 
 	strcpy(inclui[n_usuario].senha_u, senha);
-
 
 	printf("Insira o nome do(a) usuario(a): ");
 	scanf(" %50[^\n]", inclui[n_usuario].nome_u);
@@ -202,11 +203,11 @@ void listar_usuario(INFO_USUARIO *usuario, int *u_total)
 {
 	clear();
 	int i = 0;
-	while(i < (*u_total))
-	{	
+	while (i < (*u_total))
+	{
 		printf("%-10s\t%-10s\t%-10s\n", usuario[i].login_u, usuario[i].senha_u, usuario[i].nome_u);
 		i++;
-	}	
+	}
 }
 
 int login_acesso(INFO_USUARIO *usuario, int *total_u, int *logado)
@@ -232,9 +233,9 @@ int login_acesso(INFO_USUARIO *usuario, int *total_u, int *logado)
 	senhaCheck = strcmp(senha, usuario[i].senha_u);
 	loginCheck = strcmp(login, usuario[i].login_u);
 
-	while(i < (*total_u))
+	while (i < (*total_u))
 	{
-		if(loginCheck == 0 && senhaCheck == 0)
+		if (loginCheck == 0 && senhaCheck == 0)
 		{
 			clear();
 			printf("Acesso autorizado!\n");
@@ -244,10 +245,10 @@ int login_acesso(INFO_USUARIO *usuario, int *total_u, int *logado)
 			return 1;
 		}
 		fscanf(arq, "%50[^\t] %50[^\t]%[^\n]", usuario[i].login_u, usuario[i].senha_u, usuario[i].nome_u);
-		
+
 		(*logado)++;
 		i++;
-		
+
 		senhaCheck = strcmp(senha, usuario[i].senha_u);
 		loginCheck = strcmp(login, usuario[i].login_u);
 	}
@@ -269,15 +270,15 @@ INFO_USUARIO *read(int *u_total)
 	int c, valor = 0, i = 0;
 	*u_total = 0;
 	char enter;
-	
+
 	usuario = malloc(sizeof(INFO_USUARIO) * ((*u_total) + 1));
 
-	while((c = fgetc(arq)) != EOF)
+	while ((c = fgetc(arq)) != EOF)
 	{
 		ungetc(c, arq);
 
-		fscanf(arq, " %50[^\t] %50[^\t]%[^\n]", usuario[(*u_total)].login_u, 
-											usuario[(*u_total)].senha_u, usuario[(*u_total)].nome_u);
+		fscanf(arq, " %50[^\t] %50[^\t]%[^\n]", usuario[(*u_total)].login_u,
+			   usuario[(*u_total)].senha_u, usuario[(*u_total)].nome_u);
 		fscanf(arq, "%c", &enter);
 
 		(*u_total)++;
@@ -293,9 +294,9 @@ void write(INFO_USUARIO *usuario, int *u_total, int flag_deleta)
 	arq = fopen("usuarios.txt", "w");
 
 	int i = 0;
-	while(i < (*u_total))
+	while (i < (*u_total))
 	{
-		if(i != flag_deleta)
+		if (i != flag_deleta)
 		{
 			fprintf(arq, "%s\t%s%s\n", usuario[i].login_u, usuario[i].senha_u, usuario[i].nome_u);
 		}
@@ -317,9 +318,9 @@ int deleta_usuario(INFO_USUARIO *usuario, int *u_total)
 
 	loginCheck = strcmp(login, usuario[linhaFlag].login_u);
 
-	while(linhaFlag <= (*u_total))
+	while (linhaFlag <= (*u_total))
 	{
-		if(loginCheck == 0)
+		if (loginCheck == 0)
 		{
 			clear();
 			printf("Usuário %s deletado com sucesso!\n", usuario[linhaFlag].nome_u);
@@ -333,7 +334,6 @@ int deleta_usuario(INFO_USUARIO *usuario, int *u_total)
 	}
 	(*u_total)--;
 }
-
 
 INFO_USUARIO *alterar_senha(INFO_USUARIO *usuario, int *logado)
 {
@@ -350,26 +350,26 @@ INFO_USUARIO *alterar_senha(INFO_USUARIO *usuario, int *logado)
 	strcpy(usuario[(*logado)].senha_u, senha);
 
 	printf("Senha alterada!\n");
-	
+
 	return usuario;
 }
 
 INFO_USUARIO *sort(INFO_USUARIO *usuario, int *total_u)
 {
-    INFO_USUARIO temp;
-    int i, j;
+	INFO_USUARIO temp;
+	int i, j;
 
-    for(i = 0; i < (*total_u); i++)
+	for (i = 0; i < (*total_u); i++)
 	{
-        for (j = i + 1; j < (*total_u); j++)
+		for (j = i + 1; j < (*total_u); j++)
 		{
-            if (strcmp(usuario[i].nome_u, usuario[j].nome_u) > 0)
+			if (strcmp(usuario[i].nome_u, usuario[j].nome_u) > 0)
 			{
-                temp = usuario[i];
-                usuario[i] = usuario[j];
-                usuario[j] = temp;
-            }
-        }
-    }
+				temp = usuario[i];
+				usuario[i] = usuario[j];
+				usuario[j] = temp;
+			}
+		}
+	}
 	return usuario;
 }

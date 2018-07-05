@@ -6,7 +6,6 @@
 #include "familia.h"
 #include "planta.h"
 
-
 /*	
 	*************** TODO *************** 
 	-> Ano do plantio não pode ser negativo // PRONTO
@@ -31,7 +30,7 @@ void menu_elementos();
 INFO_USUARIO *checa_usuario();
 
 int main()
-{	
+{
 	checa_usuario();
 	return 0;
 }
@@ -49,9 +48,9 @@ INFO_USUARIO *checa_usuario()
 
 	//free(usuario);
 
-	while(1)
+	while (1)
 	{
-		if(checa_vazio() == 0)
+		if (checa_vazio() == 0)
 		{
 			//clear();
 			printf("Ainda não há usuários cadastrados no sistema!\n");
@@ -66,7 +65,7 @@ INFO_USUARIO *checa_usuario()
 		{
 			clear();
 			usuario = read(&total);
-			if(login_acesso(usuario, &total, &usuario_logado) == 1)
+			if (login_acesso(usuario, &total, &usuario_logado) == 1)
 			{
 				montarMenu(usuario, &total, &usuario_logado);
 				return usuario;
@@ -76,7 +75,7 @@ INFO_USUARIO *checa_usuario()
 }
 
 void analise_dados(INFO_FAMILIA *familia, INFO_PLANTA *planta,
-					int *tFamilias, int *tPlantas)
+				   int *tFamilias, int *tPlantas)
 {
 	FILE *arq;
 	arq = fopen("relatorio.html", "w");
@@ -85,7 +84,9 @@ void analise_dados(INFO_FAMILIA *familia, INFO_PLANTA *planta,
 
 	fprintf(arq, "<html>\n");
 	fprintf(arq, "<head>\n");
-	fprintf(arq, "\t<meta charset=""UTF-8"">\n");
+	fprintf(arq, "\t<meta charset="
+				 "UTF-8"
+				 ">\n");
 	fprintf(arq, "</head>\n");
 	fprintf(arq, "<body>\n");
 	fprintf(arq, "\t<h1>Análise de Dados</h1>\n\n");
@@ -93,12 +94,12 @@ void analise_dados(INFO_FAMILIA *familia, INFO_PLANTA *planta,
 	fprintf(arq, "\t\t<ul>\n");
 
 	i = 0;
-	while(i < (*tFamilias))
+	while (i < (*tFamilias))
 	{
 		fprintf(arq, "\t\t\t<li> Família %s: \n", familia[i].nome_f);
-		for(j = 0; j < (*tPlantas); j++)
+		for (j = 0; j < (*tPlantas); j++)
 		{
-			if(familia[i].codigo_f == planta[j].cod_familia)
+			if (familia[i].codigo_f == planta[j].cod_familia)
 			{
 				countQtd++;
 			}
@@ -110,19 +111,21 @@ void analise_dados(INFO_FAMILIA *familia, INFO_PLANTA *planta,
 	fprintf(arq, "\t\t<ul>\n");
 	fprintf(arq, "\t<hr/>\n\n");
 	fprintf(arq, "\t<h2>Relação de plantas no sistema</h2>\n\n");
-	fprintf(arq, "\t<table border=""1"">\n");
-	
+	fprintf(arq, "\t<table border="
+				 "1"
+				 ">\n");
+
 	fprintf(arq, "\t\t<tr>\n");
-	for(i = 0; i < (*tPlantas); i++)
+	for (i = 0; i < (*tPlantas); i++)
 	{
 		fprintf(arq, "\t\t\t<td>Nome da planta: %s</td>\n", planta[i].nomePlanta);
 	}
 	fprintf(arq, "\t\t</tr>\n");
 
 	fprintf(arq, "\t\t<tr>\n");
-	for(i = 0; i < (*tPlantas); i++)
+	for (i = 0; i < (*tPlantas); i++)
 	{
-		if(planta[i].p_frutifera == 'S')
+		if (planta[i].p_frutifera == 'S')
 		{
 			fprintf(arq, "\t\t\t<td>Frutífera</td>\n");
 		}
@@ -134,28 +137,28 @@ void analise_dados(INFO_FAMILIA *familia, INFO_PLANTA *planta,
 	fprintf(arq, "\t\t</tr>\n");
 
 	fprintf(arq, "\t\t<tr>\n");
-	for(i = 0; i < (*tPlantas); i++)
+	for (i = 0; i < (*tPlantas); i++)
 	{
 		fprintf(arq, "\t\t\t<td>R$ %.2f</td>\n", planta[i].valor_venda);
 	}
 	fprintf(arq, "\t\t</tr>\n");
 
 	fprintf(arq, "\t\t<tr>\n");
-	for(i = 0; i < (*tPlantas); i++)
+	for (i = 0; i < (*tPlantas); i++)
 	{
 		fprintf(arq, "\t\t\t<td>Número de identificação: %d</td>\n", planta[i].numeroIdPlanta);
 	}
 	fprintf(arq, "\t\t</tr>\n");
 
 	fprintf(arq, "\t\t<tr>\n");
-	for(i = 0; i < (*tPlantas); i++)
+	for (i = 0; i < (*tPlantas); i++)
 	{
 		fprintf(arq, "\t\t\t<td>Ano de plantio: %d</td>\n", planta[i].ano_plantio);
 	}
 	fprintf(arq, "\t\t</tr>\n");
 
 	fprintf(arq, "\t\t<tr>\n");
-	for(i = 0; i < (*tPlantas); i++)
+	for (i = 0; i < (*tPlantas); i++)
 	{
 		fprintf(arq, "\t\t\t<td>Código da família: %d</td>\n", planta[i].cod_familia);
 	}
@@ -172,12 +175,10 @@ void montarMenu(INFO_USUARIO *usuario, int *total_u, int *logado)
 	total = *total_u;
 	usuario_logado = *logado;
 
-
 	INFO_FAMILIA *familia = read_f(&totalFamilia);
 	INFO_PLANTA *planta = read_e(&totalPlantas);
 
-
-	while(1)
+	while (1)
 	{
 		printf("1 - Plantas\n");
 		printf("2 - Famílias\n");
@@ -186,33 +187,30 @@ void montarMenu(INFO_USUARIO *usuario, int *total_u, int *logado)
 		printf("0 - Sair\n");
 		scanf("%d", &menu);
 
-
-		switch(menu)
+		switch (menu)
 		{
-			case 1:
-				clear();
-				menu_elementos();
-				break;
-			case 2:
-				menu_categoria();
-				break;
+		case 1:
+			clear();
+			menu_elementos();
+			break;
+		case 2:
+			menu_categoria();
+			break;
 
-			case 3:
-				familia = read_f(&totalFamilia);
-				planta = read_e(&totalPlantas);
-				analise_dados(familia, planta, &totalFamilia, &totalPlantas);
-				clear();
-				printf("Análise de dados completa!\n");
-				break;
+		case 3:
+			familia = read_f(&totalFamilia);
+			planta = read_e(&totalPlantas);
+			analise_dados(familia, planta, &totalFamilia, &totalPlantas);
+			clear();
+			printf("Análise de dados completa!\n");
+			break;
 
-			case 4:
-				menu_usuario(usuario, &total, &usuario_logado);
-				break;
-			
-			case 0:
-				exit(0);
+		case 4:
+			menu_usuario(usuario, &total, &usuario_logado);
+			break;
+
+		case 0:
+			exit(0);
 		}
 	}
 }
-
-

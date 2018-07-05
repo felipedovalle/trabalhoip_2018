@@ -110,5 +110,5 @@ void write(INFO_USUARIO *usuario, int *u_total, int flag_deleta);
  * 			(representa o total de usuários já cadastros no sistema)
  * @retval None
  */
-void incluir_usuario(INFO_USUARIO *inclui, INFO_USUARIO *usuario, 
-						int n_usuario, int total);
+void incluir_usuario(INFO_USUARIO *inclui, INFO_USUARIO *usuario,
+					 int n_usuario, int total);

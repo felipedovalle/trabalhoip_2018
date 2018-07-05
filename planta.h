@@ -15,8 +15,8 @@ typedef struct _planta
  * @param  *p_total: tamanho total do vetor da struct de controle
  * @retval vetor da struct de controle atualizado com valores alterados
  */
-INFO_PLANTA *alterar_dados(INFO_PLANTA *planta, int *p_total, 
-                            int *familia, int *f_total);
+INFO_PLANTA *alterar_dados(INFO_PLANTA *planta, int *p_total,
+                           int *familia, int *f_total);
 
 /** 
  * @brief  função de controle (leitura) do vetor de struct
@@ -43,7 +43,6 @@ INFO_PLANTA *sort_plantasId(INFO_PLANTA *planta, int *p_total);
  * @retval vetor da struct de controle ordenado
  */
 INFO_PLANTA *sort_plantasNome(INFO_PLANTA *planta, int *p_total);
-
 
 /** 
  * @brief  vetor de controle do arquivo de famílias
